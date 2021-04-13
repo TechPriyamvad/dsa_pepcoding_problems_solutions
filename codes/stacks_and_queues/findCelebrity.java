@@ -75,7 +75,7 @@ public class findCelebrity {
         //checking celebrity candidate column
         for(int r=0;r <  arr.length;r++)
         {
-            if(arr[pcc][r] == 0 && r != pcc)
+            if(arr[r][pcc] == 0 && r != pcc)
             {
                 cFlag = false;
             }
