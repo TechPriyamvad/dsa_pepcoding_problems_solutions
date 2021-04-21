@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Main
+public class genericTreeCreationAndDisplay
 {
     public static class Node
     {
