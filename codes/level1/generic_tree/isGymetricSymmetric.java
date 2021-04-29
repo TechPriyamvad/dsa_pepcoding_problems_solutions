@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class mirrorImage {
+public class isSymmetric {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -79,58 +79,30 @@ public class mirrorImage {
     return h;
   }
 
-  public static void traversals(Node node){
-    System.out.println("Node Pre " + node.data);
-
-    for(Node child: node.children){
-      System.out.println("Edge Pre " + node.data + "--" + child.data);
-      traversals(child);
-      System.out.println("Edge Post " + node.data + "--" + child.data);
-    }
-
-    System.out.println("Node Post " + node.data);
-  }
-
-  public static void levelOrderLinewiseZZ(Node node){
-    Stack<Node> stack = new Stack<>();
-    stack.add(node);
-
-    Stack<Node> cstack = new Stack<>();
-    int level = 0;
-
-    while(stack.size() > 0){
-      node = stack.pop();
-      System.out.print(node.data + " ");
-
-      if(level % 2 == 0){
-        for(int i = 0; i < node.children.size(); i++){
-          Node child = node.children.get(i);
-          cstack.push(child);
-        }
-      } else {
-        for(int i = node.children.size() - 1; i >= 0; i--){
-          Node child = node.children.get(i);
-          cstack.push(child);
-        }
-      }
-
-      if(stack.size() == 0){
-        stack = cstack;
-        cstack = new Stack<>();
-        level++;
-        System.out.println();
-      }
-    }
-  }
-
-  public static void mirror(Node node){
-    
-    Collections.reverse(node.children);
-    for(Node child:node.children)
+ public static boolean areMirror(Node n1, Node n2) {
+    //number of childrens are same
+    if(n1.children.size() != n2.children.size())
     {
-        mirror(child);
+        return false;
     }
     
+    //check whether subtrees are mirror or not in both n1 and n2
+    for(int i=0,j=n2.children.size()-1;i < n1.children.size() && j >= 0 ;i++,j--)
+    {
+        Node child1 = n1.children.get(i);
+        Node child2 = n2.children.get(j);
+        
+        if(areMirror(child1,child2) == false)
+        {
+            return false;
+        }
+    }
+    
+    return true;
+  }
+  
+  public static boolean IsSymmetric(Node node) {
+    return areMirror(node,node);
   }
 
   public static void main(String[] args) throws Exception {
@@ -143,9 +115,9 @@ public class mirrorImage {
     }
 
     Node root = construct(arr);
-    display(root);
-    mirror(root);
-    display(root);
+    boolean sym = IsSymmetric(root);
+    System.out.println(sym);
+    // display(root);
   }
 
 }
